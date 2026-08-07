@@ -1,0 +1,47 @@
+# Incident Response Report
+
+## Executive Summary
+
+Short overview of the incident.
+
+## Initial Access
+
+How the attacker gained access.
+
+## Attack Chain
+
+Phishing
+↓
+Payload Execution
+↓
+Persistence
+↓
+Credential Dumping
+↓
+Lateral Movement
+↓
+Domain Compromise
+↓
+Ransomware Attempt
+
+## Impact Assessment
+
+Affected systems:
+- CEO workstation
+- WKSTN-1327
+- DC01
+
+## Containment Recommendations
+
+- Reset compromised credentials
+- Block malicious domains
+- Remove persistence mechanisms
+- Review scheduled tasks
+- Monitor privileged accounts
+
+## Detection Improvements
+
+- Enable Sysmon logging
+- Improve PowerShell monitoring
+- Add Sigma rules
+- Monitor DCSync activity
