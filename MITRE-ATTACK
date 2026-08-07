@@ -1,0 +1,21 @@
+# MITRE ATT&CK Mapping
+
+The following table maps attacker behavior observed during the Boogeyman 3 investigation to MITRE ATT&CK techniques.
+
+| Technique | ID | Description |
+|-----------|----|-------------|
+| Phishing: Spearphishing Attachment | T1566.001 | Malicious document attachment used for initial access |
+| Mshta | T1218.005 | mshta.exe used to execute malicious HTA payload |
+| Rundll32 | T1218.011 | rundll32.exe used to execute implanted payload |
+| PowerShell | T1059.001 | PowerShell used for execution and downloads |
+| Scheduled Task | T1053.005 | Scheduled task created for persistence |
+| UAC Bypass | T1548.002 | fodhelper.exe used to bypass UAC |
+| Process Discovery | T1057 | System enumeration |
+| Permission Groups Discovery | T1069 | Account and privilege enumeration |
+| Credential Dumping | T1003 | Credentials extracted using Mimikatz |
+| OS Credential Dumping: NTDS | T1003.003 | Domain credential extraction |
+| DCSync | T1003.006 | Domain credential replication attack |
+| Remote Services | T1021 | Lateral movement between hosts |
+| Ingress Tool Transfer | T1105 | Downloading tools and payloads |
+| Command and Control | T1071 | Communication with attacker infrastructure |
+| Data Encrypted for Impact | T1486 | Ransomware execution attempt |
