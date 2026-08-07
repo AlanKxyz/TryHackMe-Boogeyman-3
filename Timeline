@@ -1,0 +1,23 @@
+# Incident Timeline
+
+This timeline represents the attacker activity identified during the Boogeyman 3 Incident Response investigation.
+
+| Time | Event |
+|------|-------|
+| Aug 29-30 2023 | Initial compromise activity detected |
+| 23:51 | Malicious document executed on CEO workstation |
+| 23:51 | mshta.exe executed stage 1 payload |
+| 23:51 | Payload copied using xcopy.exe to AppData Temp directory |
+| 23:51 | review.dat executed using rundll32.exe |
+| 23:51 | C2 communication established with attacker infrastructure |
+| Later | Persistence created using scheduled task "Review" |
+| Later | Attacker performed host enumeration |
+| Later | Attacker downloaded PowerView and Mimikatz |
+| Later | UAC bypass performed using fodhelper.exe |
+| Later | Credentials dumped from compromised workstation |
+| Later | Lateral movement performed using stolen credentials |
+| Later | WKSTN-1327 compromised |
+| Later | Additional credential dumping performed |
+| Later | Domain Controller targeted |
+| Later | DCSync attack performed against domain |
+| Final stage | Ransomware payload downloaded |
