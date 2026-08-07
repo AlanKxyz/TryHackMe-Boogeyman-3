@@ -1,0 +1,147 @@
+# Indicators of Compromise (IOCs)
+
+The following Indicators of Compromise (IOCs) were identified during the **TryHackMe: Boogeyman 3 Incident Response** investigation.
+
+The investigation focused on analyzing attacker activity using ELK, Sysmon telemetry, process execution logs, PowerShell activity, credential dumping, lateral movement, and C2 communication.
+
+---
+
+# Network Indicators
+
+## IP Addresses
+
+| Indicator | Description |
+|-----------|-------------|
+| 165.232.170.151 | Command and Control (C2) server used by the attacker |
+
+---
+
+## Domains
+
+| Indicator | Description |
+|-----------|-------------|
+| ff.sillytechninja.io | Domain hosting ransomware payload |
+
+---
+
+## URLs
+
+| Indicator | Description |
+|-----------|-------------|
+| hxxp://ff[.]sillytechninja[.]io/ransomboogey[.]exe | Ransomware payload download location |
+| hxxps://github[.]com/gentilkiwi/mimikatz/releases/download/2[.]2[.]0-20220919/mimikatz_trunk[.]zip | Mimikatz download location |
+
+---
+
+# File Indicators
+
+## File Names
+
+| Indicator | Description |
+|-----------|-------------|
+| review.dat | Malicious payload implanted by the attacker |
+| ransomboogey.exe | Ransomware binary downloaded during final attack stage |
+| mimikatz.exe | Credential dumping tool |
+| IT_Automation.ps1 | PowerShell script accessed from remote share |
+
+---
+
+# Command Execution Indicators
+
+## Malicious Commands
+
+| Command | Description |
+|-----------|-------------|
+| rundll32.exe D:\review\.dat,DllRegisterServer | Execution of implanted payload |
+| xcopy.exe /s /i /e /h D:\review\.dat | Payload implantation command |
+| powershell.exe | Used for execution, enumeration and downloads |
+
+---
+
+# Persistence Indicators
+
+## Scheduled Tasks
+
+| Indicator | Description |
+|-----------|-------------|
+| Review | Scheduled task created for persistence |
+
+---
+
+# Credential Indicators
+
+## Compromised Accounts
+
+| Account | Description |
+|---------|-------------|
+| itadmin | Account obtained through credential dumping |
+| QUICKLOGISTICS\allan.smith | Account used for lateral movement |
+| administrator | Privileged account accessed by attacker |
+| backupda | Domain account dumped during DCSync attack |
+
+---
+
+# Credential Hashes
+
+| Username | Hash |
+|----------|------|
+| itadmin | F84769D250EB95EB2D7D8B4A1C5613F2 |
+| administrator | 00f80f2538dcb54e7adc715c0e7091ec |
+
+---
+
+# Hosts
+
+| Hostname | Description |
+|----------|-------------|
+| WKSTN-1327 | Second compromised workstation |
+| DC01 | Domain Controller targeted during attack |
+
+---
+
+# Tools Used By Attacker
+
+| Tool | Purpose |
+|------|---------|
+| mimikatz | Credential dumping and DCSync |
+| fodhelper.exe | UAC bypass |
+| PowerShell | Execution and payload download |
+| rundll32.exe | Payload execution |
+| wsmprovhost.exe | Remote command execution |
+
+---
+
+# MITRE ATT&CK Mapping
+
+| Technique | ID | Description |
+|-----------|----|-------------|
+| Spearphishing Attachment | T1566.001 | Initial malicious document |
+| Mshta | T1218.005 | Proxy execution |
+| Rundll32 | T1218.011 | Payload execution |
+| PowerShell | T1059.001 | Command execution |
+| Scheduled Task | T1053.005 | Persistence |
+| UAC Bypass | T1548.002 | Privilege escalation |
+| Credential Dumping | T1003 | Credential theft |
+| OS Credential Dumping: NTDS | T1003.003 | Domain credential theft |
+| Remote Services | T1021 | Lateral movement |
+| DCSync | T1003.006 | Domain credential replication |
+| Ingress Tool Transfer | T1105 | Payload downloads |
+
+---
+
+# Incident Summary
+
+The attacker gained initial access through a malicious document attachment.
+
+The attack chain included:
+
+1. Payload execution through mshta.exe
+2. Payload implantation using xcopy
+3. Execution through rundll32.exe
+4. Persistence via scheduled task
+5. C2 communication
+6. UAC bypass using fodhelper.exe
+7. Credential dumping using Mimikatz
+8. Lateral movement using stolen credentials
+9. Domain compromise through DCSync
+10. Ransomware deployment attempt
