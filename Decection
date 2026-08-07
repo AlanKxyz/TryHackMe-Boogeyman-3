@@ -1,0 +1,119 @@
+# Detection Engineering
+
+This section contains detection logic developed from attacker behavior identified during the Boogeyman 3 incident investigation.
+
+The objective of these detections is to identify common adversary techniques and demonstrate the creation of SIEM detection rules based on observed attack activity.
+
+## Detection Use Cases
+
+### Suspicious Mshta Execution
+
+Detects execution of `mshta.exe`, commonly used for proxy execution and malicious script execution.
+
+```spl
+index=sysmon EventCode=1 Image="*mshta.exe"
+```
+
+**MITRE ATT&CK*** T1218.005 -*Mshta
+
+---
+
+### Rundll32 Payload E*ecution
+
+Detects suspicious execut*on of DLL payloads through `rundll*2.exe`.
+
+```spl
+index=sysmon*Event*ode=1 Image="*rundll32.exe" CommandLine="*DllRegisterServer*"
+```
+
+**MITRE ATT&CK:** T1218.011 - Rundll32
+
+---
+
+### Scheduled Task Persistence
+
+Detects scheduled task creation used to maintain persistence.
+
+```spl
+index=wineventlog EventCode=4698
+```
+
+```spl
+index=sysmon EventCode=1 CommandLine="*schtasks*"
+```
+
+**MITRE ATT&CK:** T1053.005 - Scheduled Task
+
+---
+
+### PowerShell Download Activity
+
+Detects PowerShell commands used to download external content.
+
+```spl
+index=sysmon EventCode=1 Image="*powershell.exe" (CommandLine="*Invoke-WebRequest*" OR CommandLine="*DownloadString*" OR CommandLine="*iwr*")
+```
+
+**MITRE ATT&CK:** T1105*- Ingress Tool Transfer
+
+---
+
+### *odhelper UAC Bypass
+
+Detects execu*ion of `fodhelper.exe*,*a process frequently abused for UA**bypass techniques.
+
+```spl
+index=s*smon EventCode=1 Image="*fodhelper.exe"
+```
+
+**MITRE ATT&CK:** T1548.002 - Bypass User Account Control
+
+---
+
+### Credential Dumping Activity
+
+Detects potential credential dumping through Mimikatz-related indicators.
+
+```spl
+index=sysmon EventCode=1 (Image="*mimik*tz.exe" OR CommandLine="*sekurlsa*" OR CommandLine="*lsadump*")
+```
+
+**MITRE ATT&CK:** T1003 - *S Credential Dumping
+
+---
+
+### DCS*nc Attack Detection
+
+Detects Activ* Directory replication abuse associated with DCSync attacks.
+
+```spl
+index=wineventlog EventCode=4662 Properties="*Replicating Directory Changes*"
+```
+
+**MITRE ATT&CK:** T1003.006*- DCSync
+
+---
+
+## Detection Covera*e
+
+| Detection | MITRE ATT&CK |
+|-----------|------------|
+| Mshta E*ecution | T1218.005 |
+| Rundll32 E*ecution | T1218.011 |
+| Scheduled *ask Persistence | T1053.005 |
+| Po*erShell Download Activity | T1105 *
+| Fodhelper UAC Bypass | T1548.00* |
+| Credential Dumping | T1003 |
+* DCSync Attack | T1003.006 |
+
+## Skills Demonstrated
+
+- Detection Eng*neering
+- SIEM Query Development
+-*Threat Hunting
+- Sigma Rule Develo*ment
+- Windows Log Analysis
+- MITR* ATT&CK Mapping
+- Incident Respons*
+- Adversary Behavior Analysis
+```*
